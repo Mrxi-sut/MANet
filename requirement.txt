@@ -1,0 +1,16 @@
+torch
+torchvision
+torchaudio
+numpy
+opencv-python
+timm==0.4.12
+fvcore
+einops
+packaging
+yacs
+termcolor
+chardet
+tensorboardX
+submitit
+seaborn
+ninja

@@ -1,0 +1,4 @@
+# ninja log v7
+9	21428	1763465523168503550	/tmp/NET/NET/VMamba/kernels/selective_scan/build/temp.linux-x86_64-cpython-39/csrc/selective_scan/cusoflex/selective_scan_oflex.o	2c55e893b51296ee
+28	16608	1763465573538527710	/tmp/NET/NET/VMamba/kernels/selective_scan/build/temp.linux-x86_64-cpython-39/csrc/selective_scan/cusoflex/selective_scan_core_fwd.o	43d2451b19e94a79
+26	58595	1763465573536702990	/tmp/NET/NET/VMamba/kernels/selective_scan/build/temp.linux-x86_64-cpython-39/csrc/selective_scan/cusoflex/selective_scan_core_bwd.o	d9aef0b0029ffb20
