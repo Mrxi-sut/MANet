@@ -3196,50 +3196,48 @@ def CrossMerge_saliency(ys, index_s, mask_ns, gt):
     ys = ys.view(B, K, C, -1)
     out_ys = ys.new_empty(B, C, H, W)
     
-    # --- 修正 1: 解包 index_s (如果是 List) ---
+
     if isinstance(index_s, list):
         idx_base = index_s[0] 
     else:
         idx_base = index_s
 
-    # --- 修正 2: 解包 mask_ns (如果是 List) ---
-    # 你的报错就是因为缺少这一步！
+
     if isinstance(mask_ns, list):
         mask_base = mask_ns[0]
     else:
         mask_base = mask_ns
 
     for b in range(B):
-        # 1. 计算长度
+   
         len_s = int(gt.view(B, -1, L)[b].sum().item())
         len_ns = L - len_s 
 
-        # 2. 切片 (现在对 Tensor 操作，不会报错了)
-        # 使用 idx_base 和 mask_base
+
         cur_index_s = idx_base[b:b+1, ..., :len_s]
         cur_mask_ns = mask_base[b:b+1, ..., :len_ns]
 
-        # --- y1 (方向 0) ---
+
         y1_1 = restore_saliency_tensor([1,C,H,W], ys[b:b+1, 0, :, :len_s], cur_index_s)
         y1_2 = restore_tensor([1,C,H,W], ys[b:b+1, 0, :, len_s:], cur_mask_ns)
         y1 = y1_1 + y1_2
 
-        # --- y2 (方向 1: 翻转) ---
+
         y2_1 = restore_saliency_tensor([1,C,H,W], ys[b:b+1, 1, :, :len_s].flip(dims=[-1]), cur_index_s)
         y2_2 = restore_tensor([1,C,H,W], ys[b:b+1, 1, :, len_s:].flip(dims=[-1]), cur_mask_ns)
         y2 = y2_1 + y2_2
 
-        # --- y3 (方向 2) ---
+
         y3_1 = restore_saliency_tensor([1,C,H,W], ys[b:b+1, 2, :, :len_s], cur_index_s)
         y3_2 = restore_tensor([1,C,H,W], ys[b:b+1, 2, :, len_s:], cur_mask_ns)
         y3 = y3_1 + y3_2
 
-        # --- y4 (方向 3: 翻转) ---
+   
         y4_1 = restore_saliency_tensor([1,C,H,W], ys[b:b+1, 3, :, :len_s].flip(dims=[-1]), cur_index_s)
         y4_2 = restore_tensor([1,C,H,W], ys[b:b+1, 3, :, len_s:].flip(dims=[-1]), cur_mask_ns)
         y4 = y4_1 + y4_2
         
-        # 3. 赋值
+     
         out_ys[b] = (y1 + y2 + y3 + y4).squeeze(0)
 
     return out_ys.view(B, C, L)
@@ -3250,14 +3248,14 @@ def CrossScan_modality(x_rgb, x_e):
         x_rgb = x_rgb.view(B, C, L)
         x_e = x_e.view(B, C, L)
 
-        #局部
+        
         Hg2, Wg2 = math.ceil(H / 2), math.ceil(W / 2)
         x_rgb_local = x_rgb.view(B, C, H, W).view(B, C, Hg2, 2, Wg2, 2).permute(0, 1, 2, 4, 3, 5).reshape(B, C, Hg2 * Wg2, -1)
         x_e_local = x_e.view(B, C, H, W).view(B, C, Hg2, 2, Wg2, 2).permute(0, 1, 2, 4, 3, 5).reshape(B, C, Hg2 * Wg2, -1)
         scan_1 = torch.cat([x_rgb_local, x_e_local], dim=-1).view(B, C, L * 2)
         scan_1_flip = torch.cat([x_e_local, x_rgb_local], dim=-1).view(B, C, L * 2)
 
-        #全局
+        
         scan_2 = torch.cat([x_rgb, x_e], dim=-1).view(B, C, L*2)
         scan_2_flip = torch.cat([x_e, x_rgb], dim=-1).view(B, C, L*2)
 
@@ -3351,10 +3349,10 @@ def traverse_saliency_tensor(tensor):
                 non_zero_index = non_zero_indices + current_row * tensor.size(0)
                 result_index.extend(non_zero_index.tolist())
                 # print(result_index)
-                if current_row < tensor.size(0) - 1:  # 确保有下一行
+                if current_row < tensor.size(0) - 1:  
                     last_index = non_zero_indices[-1].item()
 
-                    # 提取下一行的非零元素及其索引
+                    
                     next_non_zero_indices = torch.nonzero(tensor[current_row + 1], as_tuple=False).squeeze()
                     if next_non_zero_indices.ndim == 0:
                         next_non_zero_indices = next_non_zero_indices.unsqueeze(0)
@@ -3363,11 +3361,11 @@ def traverse_saliency_tensor(tensor):
                         left_index = next_non_zero_indices[0].item()
                         right_index = next_non_zero_indices[-1].item()
 
-                        # 计算曼哈顿距离
+                        
                         left_dist = abs(last_index - left_index)
                         right_dist = abs(last_index - right_index)
 
-                        # 根据距离选择最左或最右的非零元素
+                        
                         if left_dist <= right_dist:
                             direction = 'left_right'
                         else:

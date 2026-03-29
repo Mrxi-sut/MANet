@@ -3,7 +3,7 @@ from basebone_vmamba import vssm_small as backbone
 import torch.nn as nn
 import torch
 from  VMamba.kernels.vmamba import LayerNorm,Mlp
-from  PR import PRFI
+from  PR import PRFI,SR
 from HA import HA
 import torch.nn.functional as F
 from MambaDecoder import MambaDecoder
@@ -53,6 +53,8 @@ class CrossMamba_(nn.Module):
             nn.ReLU(inplace=True) 
         )
         self.prfi = PRFI(dim)
+        self.sr = SR(CA=True, dim=dim)
+        self.reduce = nn.Conv2d(dim * 2, dim, kernel_size=1, bias=False)
 
 
     def forward(self, rgb, t):  
@@ -63,17 +65,14 @@ class CrossMamba_(nn.Module):
          rgb_,t_=self.cross_mamba(rgb,t)
          rgb_ = rgb_.permute(0, 3, 1, 2).contiguous()
          t_ = t_.permute(0, 3, 1, 2).contiguous()
+         rgb_, t_ = self.sr(rgb_, t_)
          alpha, beta = self.dynamic_gate(rgb_, t_)
          rgb_out = rgb_in + (alpha * rgb_)
          t_out = t_in + (beta * t_)
          cat_feat = torch.cat([rgb_out, t_out], dim=1) # [B, 2C, H, W]
-         x = self.fusion_conv(cat_feat)
-         resid = x 
+         x = self.reduce(cat_feat)
          x = x.permute(0, 2, 3, 1).contiguous()
-         x = self.norm(x)
-         x = self.mlp(x)
          x = x.permute(0, 3, 1, 2).contiguous()# [B, C, H, W]
-         x = x + resid
          return x
 
 class DynamicGate(nn.Module):

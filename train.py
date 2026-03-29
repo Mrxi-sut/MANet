@@ -10,10 +10,10 @@ from torch.nn import functional as F
 from model import Model
 import pytorch_iou
 
-# 设置 GPU
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
-# IOU 损失
+
 IOU = pytorch_iou.IOU(size_average=True)
 
 
@@ -24,21 +24,21 @@ def compute_loss(out, saliency, label):
         saliency:  [B, 1, H, W]
         label:  [B, 1, H, W]
     """
-    # 确保输出和标签尺寸一致
+   
     out = F.interpolate(out, label.shape[2:], mode='bilinear', align_corners=False)
     saliency = F.interpolate(saliency, label.shape[2:], mode='bilinear', align_corners=False)
 
-    # 主输出的 BCE 损失
+ 
     loss_out = F.binary_cross_entropy_with_logits(out, label, reduction='mean')
 
-    # 显著性图的 BCE 损失
+
     loss_saliency = F.binary_cross_entropy_with_logits(saliency, label, reduction='mean')
 
-    # IOU 损失
+
     out_sig = torch.sigmoid(out)
     loss_iou = IOU(out_sig, label)
 
-    # 总损失：主输出 + 显著性引导 + IOU
+
     total_loss = loss_out + 0.5 * loss_saliency + 0.5 * loss_iou
 
     return total_loss, loss_out, loss_saliency, loss_iou

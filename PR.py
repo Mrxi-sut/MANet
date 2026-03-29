@@ -118,3 +118,53 @@ class Feature_Pool(nn.Module):
         b, c, _, _ = x.size()
         y = self.up(self.act(self.down(self.gap_pool(x).permute(0,2,3,1)))).permute(0,3,1,2).view(b,c)
         return y
+
+class SR(nn.Module):
+    def __init__(self, CA=True, dim=256):
+        super(SR, self).__init__()
+        self.CA = CA
+        self.conv_fuse = nn.Sequential(
+            nn.Conv2d(dim, dim // 4, 3, 1, 1),
+            nn.BatchNorm2d(dim // 4),
+            nn.ReLU(),
+            nn.Conv2d(dim // 4, dim, 3, 1, 1),
+            nn.BatchNorm2d(dim),
+            nn.ReLU()
+        )
+        if self.CA:
+            self.att1 = CrossAttention(in_channel=dim)
+            self.att2 = CrossAttention(in_channel=dim)
+        else:
+            print("Warning: not use CrossAttention!")
+            self.conv2 = nn.Conv2d(256, 256, 3, 1, 1)
+            self.conv3 = nn.Conv2d(256, 256, 3, 1, 1)
+    def forward(self, rgb, t):
+        if self.CA:
+            feat_1 = self.att1(rgb, t)
+            feat_2 = self.att2(t, rgb)
+        else:
+            w1 = self.conv2(rgb)
+            w2 = self.conv3(t)
+            feat_1 = F.relu(w2*rgb, inplace=True)
+            feat_2 = F.relu(w1*t, inplace=True)
+        out1 = rgb + feat_1
+        out2 = t + feat_2
+        return out1, out2
+
+class CrossAttention(nn.Module):
+    def __init__(self, in_channel=256, ratio=1):
+        super(CrossAttention, self).__init__()
+        self.conv_k = nn.Conv2d(in_channel, in_channel, kernel_size=ratio, stride=ratio)
+        self.conv_v = nn.Conv2d(in_channel, in_channel, kernel_size=ratio, stride=ratio)
+        self.conv_q = nn.Conv2d(in_channel, in_channel, kernel_size=1)
+    def forward(self, rgb, depth):
+        bz, c, h, w = rgb.shape
+        rgb_q = self.conv_q(rgb).view(bz, -1, h*w).permute(0, 2, 1)
+        depth_k = self.conv_k(depth).view(bz, c, -1)
+        depth_v = self.conv_v(depth).view(bz, c, -1).permute(0, 2, 1)
+        mask = torch.bmm(rgb_q, depth_k)
+        mask = torch.softmax(mask, dim=-1)
+        feat = torch.bmm(mask, depth_v)
+        feat = rgb_q + feat
+        feat = feat.permute(0, 2, 1).view(bz, -1, h, w)
+        return feat
