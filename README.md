@@ -12,5 +12,12 @@ pip install -r requirement.txt
 [百度网盘的链接](https://pan.baidu.com/s/1LsNjBH859M8h6JizMBuVUg)
 提取码：383p 
 
+## 我们使用的数据集
+[百度网盘链接](https://pan.baidu.com/s/1IHy721lqMAVx_PDRtyExkw)
+提取码: tf2n
+
+## 我们模型的结果
+[百度网盘链接](https://pan.baidu.com/s/191c6DR0UMT8j0f-wCfZDCA)
+提取码: pcj6 
 
 
