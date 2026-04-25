@@ -20,4 +20,7 @@ pip install -r requirement.txt
 [百度网盘链接](https://pan.baidu.com/s/191c6DR0UMT8j0f-wCfZDCA)
 提取码: pcj6 
 
+## 我们对比模型的结果
+[百度网盘链接](https://pan.baidu.com/s/1GeX_VdEzxkzCkb1Z68bu2w)
+提取码: ymy8 
 
