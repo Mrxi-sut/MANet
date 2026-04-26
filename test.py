@@ -106,8 +106,6 @@ if __name__ == '__main__':
     print('Testing completed!')
     print(f'Total images processed: {img_num}')
     print(f'Total time: {total_time:.2f} seconds')
-    print(f'Average time per image: {total_time/img_num:.3f} seconds')
-    print(f'Average FPS: {img_num/total_time:.2f}')
     print(f'Results saved to: {out_path}')
     if save_saliency:
         print(f'Saliency maps saved to: {saliency_path}')
