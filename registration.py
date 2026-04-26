@@ -2,8 +2,6 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from inplace_abn import InPlaceABN, InPlaceABNSync
-# InPlaceABN = nn.BatchNorm2d
-# InPlaceABNSync = nn.BatchNorm2d
 class PR(nn.Module):
     def __init__(self, features):
         super(PR, self).__init__()
