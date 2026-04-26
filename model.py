@@ -3,7 +3,7 @@ from basebone_vmamba import vssm_small as backbone
 import torch.nn as nn
 import torch
 from  VMamba.kernels.vmamba import LayerNorm,Mlp
-from  Registration import PRFI,SR
+from  registration import PRFI,SR
 from HA import HA
 import torch.nn.functional as F
 from MambaDecoder import MambaDecoder
