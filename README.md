@@ -9,18 +9,18 @@ pip install -r requirement.txt
 [Please refer to the mamba_ssm installation guide](https://github.com/AlwaysFHao/Mamba-Install)
 
 ## Downloading Pre-trained Weights
-[Baidu Netdisk link](https://pan.baidu.com/s/1LsNjBH859M8h6JizMBuVUg)
+[Pre-trained Weights](https://pan.baidu.com/s/1LsNjBH859M8h6JizMBuVUg) <br>
 提取码：383p 
 
 ## Our Datasets
-[Baidu Netdisk link](https://pan.baidu.com/s/1IHy721lqMAVx_PDRtyExkw)
+[Datasets](https://pan.baidu.com/s/1IHy721lqMAVx_PDRtyExkw) <br>
 提取码: tf2n
 
 ## Model Results
-[Baidu Netdisk link](https://pan.baidu.com/s/191c6DR0UMT8j0f-wCfZDCA)
+[Results](https://pan.baidu.com/s/191c6DR0UMT8j0f-wCfZDCA) <br>
 提取码: pcj6 
 
 ## Comparison Results
-[Baidu Netdisk link](https://pan.baidu.com/s/1GeX_VdEzxkzCkb1Z68bu2w)
+[Comparison Results](https://pan.baidu.com/s/1GeX_VdEzxkzCkb1Z68bu2w) <br>
 提取码: ymy8 
 
