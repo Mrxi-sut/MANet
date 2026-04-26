@@ -2,6 +2,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from inplace_abn import InPlaceABN, InPlaceABNSync
+
 class PR(nn.Module):
     def __init__(self, features):
         super(PR, self).__init__()
