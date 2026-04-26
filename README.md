@@ -1,26 +1,26 @@
-# 配置MANet运行环境
-## 环境搭建
+# Set up the MANet runtime environment
+## Environment setup
 ```python
 conda create  -n manet python=3.9
 conda activate manet
 pip install -r requirement.txt
 ```
-**注意**:由于要安装的mamba_ssm里面包含了高度优化的 CUDA 算子,因此需要确保你的服务器上面安装了正确版本的nvcc 编译器，并且与 PyTorch 的 CUDA 版本一致。
-[参考mamba_ssm安装](https://github.com/AlwaysFHao/Mamba-Install)
+**Note**:Since mamba_ssm contains highly optimized CUDA kernels, you need to ensure that the correct version of the nvcc compiler is installed on your server, and that it is consistent with the CUDA version of your PyTorch.
+[Please refer to the mamba_ssm installation guide](https://github.com/AlwaysFHao/Mamba-Install)
 
-## 预训练权重的下载
-[百度网盘的链接](https://pan.baidu.com/s/1LsNjBH859M8h6JizMBuVUg)
+## Downloading Pre-trained Weights
+[Baidu Netdisk link](https://pan.baidu.com/s/1LsNjBH859M8h6JizMBuVUg)
 提取码：383p 
 
-## 我们使用的数据集
-[百度网盘链接](https://pan.baidu.com/s/1IHy721lqMAVx_PDRtyExkw)
+## Our Datasets
+[Baidu Netdisk link](https://pan.baidu.com/s/1IHy721lqMAVx_PDRtyExkw)
 提取码: tf2n
 
-## 我们模型的结果
-[百度网盘链接](https://pan.baidu.com/s/191c6DR0UMT8j0f-wCfZDCA)
+## Model Results
+[Baidu Netdisk link](https://pan.baidu.com/s/191c6DR0UMT8j0f-wCfZDCA)
 提取码: pcj6 
 
-## 我们对比模型的结果
-[百度网盘链接](https://pan.baidu.com/s/1GeX_VdEzxkzCkb1Z68bu2w)
+## Comparison Results
+[Baidu Netdisk link](https://pan.baidu.com/s/1GeX_VdEzxkzCkb1Z68bu2w)
 提取码: ymy8 
 
