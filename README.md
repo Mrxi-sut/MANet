@@ -10,17 +10,17 @@ pip install -r requirement.txt
 
 ## Downloading Pre-trained Weights
 [Pre-trained Weights](https://pan.baidu.com/s/1LsNjBH859M8h6JizMBuVUg) <br>
-提取码：383p 
+Extraction code：383p 
 
 ## Our Datasets
 [Datasets](https://pan.baidu.com/s/1IHy721lqMAVx_PDRtyExkw) <br>
-提取码: tf2n
+Extraction code: tf2n
 
 ## Model Results
 [Results](https://pan.baidu.com/s/191c6DR0UMT8j0f-wCfZDCA) <br>
-提取码: pcj6 
+Extraction code: pcj6 
 
 ## Comparison Results
 [Comparison Results](https://pan.baidu.com/s/1GeX_VdEzxkzCkb1Z68bu2w) <br>
-提取码: ymy8 
+Extraction code: ymy8 
 
